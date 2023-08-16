@@ -18,8 +18,8 @@ class MessageFactory extends Factory
     {
         return [
             'content'=>fake()->sentence(),
-            'user_id'=>fake()->numberBetween(1,10),
-            'chat_id'=>fake()->numberBetween(1,50),
+            'user_id'=>fake()->numberBetween(1,5),
+            'chat_id'=>fake()->numberBetween(1,15),
         ];
     }
 }

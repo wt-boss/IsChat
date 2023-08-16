@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         \App\Models\User::factory(10)->hasAttached(Chat::factory()->count(5))->create();
+         \App\Models\User::factory(5)->create();
+         Chat::factory()->count(15)->create();
          Message::factory(100)->create();
 
         \App\Models\User::factory()->create([

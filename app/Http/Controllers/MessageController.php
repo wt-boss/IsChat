@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewMessage;
 use App\Models\Message;
-use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
+use Illuminate\Http\Request;
+
 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,9 +33,18 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMessageRequest $request)
+    public function store(Request $request)
     {
-        //
+        $credentials = $request->validate([
+            'content'=>'required|string',
+            'chat_id'=>'integer|required',
+            'user_id'=>'integer|required'
+        ]);
+
+      
+        $message= Message::create($credentials);
+        broadcast(new NewMessage($message));
+        return redirect()->back();
     }
 
     /**
@@ -51,7 +66,7 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMessageRequest $request, Message $message)
+    public function update(Request $request, Message $message)
     {
         //
     }

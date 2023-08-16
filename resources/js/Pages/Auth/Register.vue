@@ -9,7 +9,7 @@ const form = useForm({
 });
 
 const register = () => {
-    form.post("register", {
+    form.post("/register", {
         preserveScroll: true,
         onSuccess: () => form.reset(),
     });
@@ -18,7 +18,7 @@ const register = () => {
 
 <template>
     <div
-        class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+        class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mx-auto max-w-7xl"
     >
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <img

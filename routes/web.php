@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestController2;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::delete('logout', [AuthController::class , 'logout']);
 Route::get('register', [AuthController::class , 'register']);
 Route::post('register', [AuthController::class , 'store']);
 Route::resource('chat', ChatController::class);
+Route::resource('message', MessageController::class);
 
 
 
