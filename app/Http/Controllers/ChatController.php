@@ -20,22 +20,22 @@ class ChatController extends Controller
     }
     public function index()
     {
+        
         $id=Auth::user()->id;
+        $users=User::all()->where('id', '!=',$id)->toArray();
         $user=User::find($id);
         $chats = $user->chats;
         $chats_users =[];
         $last_messages=[];
 
         foreach ($chats as $chat) {
-            $users=$chat->users->where('id', '!=',$id)->first();
-            $chats_users[$chat->id]=$users;
+            $chats_users[$chat->id]=$chat->users->where('id', '!=',$id)->first();
             $last_messages[$chat->id]=$chat->messages->last()->content;
         }   
-
-     // dd($last_messages);
         return inertia('Chat/Index',[
             'chats_users'=>$chats_users,
             'last_messages'=>$last_messages,
+            'users'=>$users
         ]
             
 

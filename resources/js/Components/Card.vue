@@ -20,7 +20,7 @@ import { Link } from '@inertiajs/vue3';
                     alt="Neil image"
                 />
             </div>
-            <Link :href="`chat/${chat}`"  class="w-full flex"  :data="{user:user, chat:chat}">
+            <Link :href="`chat/${chat}`"  class="w-full flex">
                 <div class="flex-4  w-4/5">
                     <p
                         class="text-sm font-medium text-gray-900 truncate dark:text-white"
