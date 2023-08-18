@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Dialog, DialogPanel } from "@headlessui/vue";
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { Link } from "@inertiajs/vue3";
+import Navbar from "../../Components/Navbar.vue";
 
 const navigation = [
     { name: "Product", href: "#" },
@@ -16,7 +17,7 @@ const mobileMenuOpen = ref(false);
 
 <template>
     <div class="bg-white">
-        <div class="relative isolate px-6 lg:px-8">
+        <div class="relative  px-6 lg:px-8">
             <div
                 class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                 aria-hidden="true"

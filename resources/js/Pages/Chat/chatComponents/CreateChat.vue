@@ -15,7 +15,7 @@ defineProps({
             +
         </button>
     </div>
-    <div class="bg-[#1b3987]  sm:w-1/2 w-full flex flex-col p-16 absolute -top-1 -left-1 min-h-[500px] h-1/2 ">
+    <div class="bg-[#1b3987] hidden sm:w-1/2 w-full flex flex-col p-16 absolute -top-1 -left-1 min-h-[500px] h-1/2 ">
         <div class="select-user mt-2">
             <form action="">
                 <input type="search" class="w-2/3 min-w-[200px] h-8 rounded-full " />

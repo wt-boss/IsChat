@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']); 
 Route::get('login', [AuthController::class , 'login']);
-Route::post('login', [AuthController::class , 'login_user']);
+Route::post('login', [AuthController::class , 'login_user'])->name('login');
 Route::delete('logout', [AuthController::class , 'logout']);
 Route::get('register', [AuthController::class , 'register']);
 Route::post('register', [AuthController::class , 'store']);

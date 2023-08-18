@@ -38,31 +38,7 @@ console.log(props.users)
         </div>
     </li>
 
-    <li class="py-3 sm:py-4">
-        <div class="flex items-center space-x-4">
-            <div class="flex-shrink-0">
-                <img
-                    class="w-8 h-8 rounded-full"
-                    src="../../images/profile.png"
-                    alt="Neil image"
-                />
-            </div>
-            <Link :href="`chat/`" class="w-full flex">
-                <div class="flex-4 w-4/5">
-                    <p
-                        class="text-sm font-medium text-gray-100 truncate dark:text-white"
-                    >
-                        {{ "name" }}
-                    </p>
-                    <p
-                        class="text-sm text-gray-100 truncate dark:text-gray-400"
-                    >
-                        {{ "lastMessage" }}
-                    </p>
-                </div>
-            </Link>
-        </div>
-    </li>
+    
 </template>
 
 <style></style>

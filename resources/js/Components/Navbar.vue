@@ -12,6 +12,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import logo from "../../images/logo.png";
 import { Link, usePage } from "@inertiajs/vue3";
 
+
 const page = usePage();
 const navigation = [
     { name: "Chat", href: "/chat", current: true },
@@ -22,6 +23,7 @@ const navigation = [
 </script>
 
 <template>
+    
     <Disclosure as="nav" class="bg-[#203c81]" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
