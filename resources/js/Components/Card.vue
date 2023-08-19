@@ -8,6 +8,7 @@ import { Link } from '@inertiajs/vue3';
         user:Number,
         chat:Number
     })
+
 </script>
 
 <template>
@@ -20,8 +21,9 @@ import { Link } from '@inertiajs/vue3';
                     alt="Neil image"
                 />
             </div>
-            <Link :href="`chat/${chat}`"  class="w-full flex">
-                <div class="flex-4  w-4/5">
+            <Link :href="`/chat/${chat}`"  class="w-full flex lg:justify-start lg:gap-16">
+               
+                <div class="f  w-2/5">
                     <p
                         class="text-sm font-medium text-gray-900 truncate dark:text-white"
                     >
@@ -33,7 +35,7 @@ import { Link } from '@inertiajs/vue3';
                        {{lastMessage}}
                     </p>
                 </div>
-                <div class="flex-1">
+                <div class="">
                     <div
                     class="inline-flex items-center w-6 h-6 justify-center text-base rounded-full font-semibold text-gray-100 bg-green-600 dark:text-white"
                 >

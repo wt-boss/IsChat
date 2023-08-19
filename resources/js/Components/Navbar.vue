@@ -139,7 +139,7 @@ const navigation = [
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                     <Link
-                                        href="logout"
+                                        href="/logout"
                                         method="delete"
                                         :class="[
                                             active ? 'bg-gray-100' : '',

@@ -2,7 +2,7 @@
 import { Link } from "@inertiajs/vue3";
 const props= defineProps({
     users:{
-        type:Object,
+        type:Object || Array,
     },
 });
 
@@ -21,7 +21,7 @@ console.log(props.users)
                     alt="Neil image"
                 />
             </div>
-            <Link :href="`chat/`" class="w-full flex">
+            <Link :href="`/chat`" method="post" as="button" :data="user" class="w-full flex text-start  ">
                 <div class="flex-4 w-4/5">
                     <p
                         class="text-sm font-medium text-gray-100 truncate dark:text-white"

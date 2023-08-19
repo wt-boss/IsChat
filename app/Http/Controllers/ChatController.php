@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
-use App\Http\Requests\StoreChatRequest;
-use App\Http\Requests\UpdateChatRequest;
+
 use App\Models\User;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
@@ -22,20 +22,27 @@ class ChatController extends Controller
     {
         
         $id=Auth::user()->id;
-        $users=User::all()->where('id', '!=',$id)->toArray();
+        $users=User::all()->where('id', '!=',$id);
         $user=User::find($id);
         $chats = $user->chats;
         $chats_users =[];
         $last_messages=[];
-
+        $chat_id=[];
         foreach ($chats as $chat) {
-            $chats_users[$chat->id]=$chat->users->where('id', '!=',$id)->first();
-            $last_messages[$chat->id]=$chat->messages->last()->content;
+            if($chat->messages->last()){
+                $chats_users[$chat->id]=$chat->users->where('id', '!=',$id)->first();
+                $last_messages[$chat->id]=$chat->messages->last()->content;
+                $chat_id[$chat->id]=$chat->id;
+            }
+   
         }   
+
+    
         return inertia('Chat/Index',[
             'chats_users'=>$chats_users,
             'last_messages'=>$last_messages,
-            'users'=>$users
+            'users'=>$users,
+            'chat_id'=>$chat_id
         ]
             
 
@@ -62,7 +69,8 @@ class ChatController extends Controller
                         [
                             'messages'=>$messages,
                             'user'=>$user,
-                            'auth'=>$auth
+                            'auth'=>$auth,
+                            'chat'=>$chat,
                         ]);
     }
 
@@ -77,9 +85,32 @@ class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreChatRequest $request)
+    public function store(Request $request)
     {
-        //
+        $searchUser = User::find($request->id);
+        $searchUserChats = $searchUser->chats;
+        $auth= Auth::user() ;
+       // dd($searchUserChats[0]->users);
+        //dd($searchUser->chats->where('id', '=', $auth->id));
+        if($searchUserChats){
+            foreach ($searchUserChats as $chat) {
+                if($chat->users->where('id', '=', $auth->id)->first()->id??false){
+                    return redirect()->to('chat/'.$chat->id);
+                }
+            }
+        }
+        $newChat = Chat::create();
+
+        DB::table('chat_user')->insert([
+            'chat_id'=>$newChat->id,
+            'user_id'=>$searchUser->id
+        ]);
+        DB::table('chat_user')->insert([
+            'chat_id'=>$newChat->id,
+            'user_id'=>$auth->id
+        ]);
+
+        return redirect()->to('chat/'.$newChat->id);
     }
 
 
@@ -95,7 +126,7 @@ class ChatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateChatRequest $request, Chat $chat)
+    public function update(Request $request, Chat $chat)
     {
         //
     }
