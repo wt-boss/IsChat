@@ -1,20 +1,18 @@
 <script setup>
-    import {useForm ,Link} from '@inertiajs/vue3';
+import { useForm, Link } from "@inertiajs/vue3";
 
-    const form = useForm({
- 
-        email:'',
-        password:'',
-        remember:true
-    })
+const form = useForm({
+    email: "",
+    password: "",
+    remember: true,
+});
 
-    const login= ()=>{
-        form.post('login',{
-            preserveScroll:true,
-            onSuccess:()=>form.reset()
-        })
-    }
-
+const login = () => {
+    form.post("login", {
+        preserveScroll: true,
+        onSuccess: () => form.reset(),
+    });
+};
 </script>
 
 <template>
@@ -22,11 +20,14 @@
         class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 mx-auto max-w-7xl"
     >
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-                class="mx-auto h-10 w-auto"
-                src="../../../images/logo.png"
-                alt="Your Company"
-            />
+            <Link :href="'/'">
+                <img
+                    class="mx-auto h-10 w-auto"
+                    src="../../../images/logo.png"
+                    alt="Your Company"
+                />
+            </Link>
+
             <h2
                 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
             >
@@ -51,7 +52,7 @@
                             v-model="form.email"
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        <span>{{ form.errors.email}}</span>
+                        <span>{{ form.errors.email }}</span>
                     </div>
                 </div>
 
@@ -83,7 +84,11 @@
                     </div>
                 </div>
                 <div>
-                    <input type="checkbox" v-model="form.remember" class="appearance-none checked:bg-blue-600 checked:border-transparent ...">
+                    <input
+                        type="checkbox"
+                        v-model="form.remember"
+                        class="appearance-none checked:bg-blue-600 checked:border-transparent ..."
+                    />
                 </div>
                 <div>
                     <button
@@ -99,7 +104,11 @@
                 Not a member?
                 {{ " " }}
 
-                <Link href="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" >create account</Link>
+                <Link
+                    href="/register"
+                    class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                    >create account</Link
+                >
             </p>
         </div>
     </div>
