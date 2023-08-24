@@ -2,8 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Chat;
-use App\Models\Message;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,21 +10,18 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class NewMessage implements ShouldBroadcastNow 
+class UserStatusEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-
-     public $message;
-
-    public function __construct( Message $message)
+    protected $user;
+    public function __construct( User $user)
     {
-        $this->message=$message;
+        $this->user=$user;
     }
 
     /**
@@ -35,11 +31,13 @@ class NewMessage implements ShouldBroadcastNow
      */
     public function broadcastOn(): array
     {
-        $chat_id = $this->message->chat_id;
         return [
-            new PrivateChannel("chat.".$chat_id),
+            new PrivateChannel('user.status.'.$this->user->id),
         ];
     }
 
-
+    public function broadcastWith(): array
+{
+    return ['user' => $this->user];
+}
 }

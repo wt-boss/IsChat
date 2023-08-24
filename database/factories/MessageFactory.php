@@ -20,6 +20,7 @@ class MessageFactory extends Factory
             'content'=>fake()->sentence(),
             'user_id'=>fake()->numberBetween(1,5),
             'chat_id'=>fake()->numberBetween(1,15),
-        ];
+            'status'=>'nonLue'
+        ]; 
     }
 }

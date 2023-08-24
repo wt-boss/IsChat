@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserStatusEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 
 class AuthController extends Controller
 {
@@ -19,8 +21,12 @@ class AuthController extends Controller
         ]);
 
         if(Auth::attempt($credentials, $request->remember)){
-
+            $user=User::where('email', '=', $request->email)->first();
+          /*   dd($request->session());
             $request->session()->regenerate();
+            $user->status = 'ligne';
+            $user->save(); */
+          //  Broadcast(new UserStatusEvent($user));
             return redirect()->intended();
         }
 
@@ -55,4 +61,5 @@ class AuthController extends Controller
         Auth::login($user);
         return redirect()->intended()->with('success', 'account create');
     }
+
 }

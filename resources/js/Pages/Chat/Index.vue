@@ -24,6 +24,7 @@ const handleSearch = () => {
     searchState.value = !searchState.value;
 };
 
+
 </script>
 
 <template>
@@ -65,7 +66,7 @@ const handleSearch = () => {
                     :name="value.name"
                     :lastMessage="last_messages[key]"
                     :nombreMessage="10"
-                    :user="value.id"
+                    :user="value"
                     :chat="chat_id[key]"
                 ></Card>
             </ul>

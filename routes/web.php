@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestController2;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::get('register', [AuthController::class , 'register']);
 Route::post('register', [AuthController::class , 'store']);
 Route::resource('chat', ChatController::class);
 Route::resource('message', MessageController::class);
+Route::post('/user.handle.status', [UserController::class, 'handleStatus']);
 
 
 

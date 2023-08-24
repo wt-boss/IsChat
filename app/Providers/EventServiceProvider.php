@@ -20,6 +20,16 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\NewMessage'=>[
             'App\Listeners\SendChatMessageNotification'
+        ],
+        'App\Events\UserStatusEvent'=>[
+            'App\Listeners\UserStatusListener'
+        ],
+        
+        'App\Events\TypingMessageEvent'=>[
+            'App\Listeners\TypingMessageListener'
+        ],
+        'App\Events\MessageStatusEvent'=>[
+            'App\Listeners\MessageStatusListener'
         ]
     ];
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('content');
+            $table->enum('status',['lue', 'diffuse', 'nonLue']);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('chat_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
                 });

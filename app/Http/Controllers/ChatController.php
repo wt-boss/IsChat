@@ -7,6 +7,7 @@ use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
@@ -28,9 +29,20 @@ class ChatController extends Controller
         $chats_users =[];
         $last_messages=[];
         $chat_id=[];
+        
         foreach ($chats as $chat) {
             if($chat->messages->last()){
-                $chats_users[$chat->id]=$chat->users->where('id', '!=',$id)->first();
+                $chat_user=$chat->users->where('id', '!=',$id)->first();
+                if(Cache::has('user-is-online-'.$chat_user->id)){
+                    $chat_user->status='ligne';
+                    $chat_user->save();
+                }
+                else{
+                    /* $chat_user->update(['status'=>'horsLigne']); */
+                    $chat_user->status='horsLine';
+                    $chat_user->save();
+                }
+                $chats_users[$chat->id]=$chat_user;
                 $last_messages[$chat->id]=$chat->messages->last()->content;
                 $chat_id[$chat->id]=$chat->id;
             }

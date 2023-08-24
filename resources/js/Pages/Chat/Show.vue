@@ -27,23 +27,51 @@ onMounted(() => {
     scrollbotom.scrollTo(0, scrollbotom.scrollHeight);
 }),
     watchEffect(() => {
-        window.Echo.private("chat").listen("NewMessage", (e) => {
-            updatedMessages.value.push(e.message);
-        });
-        console.log("bonjour");
-        //console.log(updatedMessages);
+        window.Echo.private('chat.'+props.chat.id).listen(
+            "NewMessage",
+            (e) => {
+                updatedMessages.value.push(e.message);
+            }
+        );
     });
+    const online = ref(props.user.status == "ligne" ? "bg-green-600" : "bg-gray-400");
+
+    const getStatus = async ()=>{
+       const res = await axios.post('/user.handle.status', props.user);
+        if(res.data.user_status){
+            props.user.status=res.data.user_status
+            if(res.data.user_status=='ligne'){
+                online.value="bg-green-600"
+            }
+            else{
+                online.value="bg-gray-400"
+            }
+            
+        }
+    }
+    setInterval(
+        ()=>{
+            getStatus();
+        },5000
+
+    );
 </script>
 
 <template>
     <div class="bg-gray-100">
         <div class="flex items-center space-x-4 h-20 mx-auto max-w-7xl">
-            <div class="flex-shrink-0 ml-2">
+            <div class="flex-shrink-0 relative ml-2">
                 <img
                     class="w-8 h-8 rounded-full"
                     src="../../../images/profile.png"
                     alt="Neil image"
                 />
+                <span
+                    :class="
+                        `border absolute top-6 left-6 border-gray-100  block w-2 h-2 rounded-full  ` +
+                        online
+                    "
+                ></span>
             </div>
             <div class="flex-1 min-w-0">
                 <p
