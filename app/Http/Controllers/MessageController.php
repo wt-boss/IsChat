@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewMessage;
 use App\Models\Message;
+use App\Events\NewMessage;
 use Illuminate\Http\Request;
-
+use App\Events\TypingMessageEvent;
+use App\Models\Chat;
 
 class MessageController extends Controller
 {
@@ -43,6 +44,7 @@ class MessageController extends Controller
 
       
         $message= Message::create($credentials);
+        broadcast(new TypingMessageEvent(Chat::find($request->chat_id), false))->toOthers();
         broadcast(new NewMessage($message));
         return redirect()->back();
     }
@@ -78,4 +80,6 @@ class MessageController extends Controller
     {
         //
     }
+
+ 
 }

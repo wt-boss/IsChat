@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestController2;
 use App\Http\Controllers\UserController;
+use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,7 @@ Route::get('register', [AuthController::class , 'register']);
 Route::post('register', [AuthController::class , 'store']);
 Route::resource('chat', ChatController::class);
 Route::resource('message', MessageController::class);
+Route::post('/chat.typing',[ChatController::class, 'typing']);
 Route::post('/user.handle.status', [UserController::class, 'handleStatus']);
 
 

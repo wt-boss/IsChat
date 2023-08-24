@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TypingMessageEvent;
 use App\Models\Chat;
 
 use App\Models\User;
@@ -149,5 +150,11 @@ class ChatController extends Controller
     public function destroy(Chat $chat)
     {
         //
+    }
+
+    public function typing(Request $request){
+        $chat = Chat::find($request->id);
+        broadcast(new TypingMessageEvent($chat, true))->toOthers();
+        return response()->json(['message'=>'jdjsd']);
     }
 }

@@ -28,7 +28,7 @@ Broadcast::channel('chat.{id}', function ($user) {
 
     });
 
-    Broadcast::channel('message.typing', function ($user) {
+    Broadcast::channel('chat.typing.{chat_id}', function ($user) {
         return Auth::check();
 
   });

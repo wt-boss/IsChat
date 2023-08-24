@@ -1,6 +1,7 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import { ref, watchEffect, onMounted } from "vue";
+import axios from "axios";
 
 const props = defineProps({
     messages: Object,
@@ -25,36 +26,53 @@ const send_message = () => {
 onMounted(() => {
     const scrollbotom = document.getElementById("message-container");
     scrollbotom.scrollTo(0, scrollbotom.scrollHeight);
-}),
-    watchEffect(() => {
-        window.Echo.private('chat.'+props.chat.id).listen(
+    setInterval(() => {
+        getStatus();
+    }, 5000);
+
+});
+watchEffect(() => {
+        window.Echo.private("chat." + props.chat.id).listen(
             "NewMessage",
             (e) => {
                 updatedMessages.value.push(e.message);
             }
         );
     });
-    const online = ref(props.user.status == "ligne" ? "bg-green-600" : "bg-gray-400");
 
-    const getStatus = async ()=>{
-       const res = await axios.post('/user.handle.status', props.user);
-        if(res.data.user_status){
-            props.user.status=res.data.user_status
-            if(res.data.user_status=='ligne'){
-                online.value="bg-green-600"
+    watchEffect(() => {
+        window.Echo.private("chat.typing." + props.chat.id).listen(
+            "TypingMessageEvent",
+            (e) => {
+                typing.value = e.typing;
+                console.log(typing.value)
             }
-            else{
-                online.value="bg-gray-400"
-            }
-            
+        );
+    });
+
+const online = ref(
+    props.user.status == "ligne" ? "bg-green-600" : "bg-gray-400"
+);
+const typing = ref(false);
+const getStatus = async () => {
+    const res = await axios.post("/user.handle.status", props.user);
+    if (res.data.user_status) {
+        props.user.status = res.data.user_status;
+        if (res.data.user_status == "ligne") {
+            online.value = "bg-green-600";
+        } else {
+            online.value = "bg-gray-400";
         }
     }
-    setInterval(
-        ()=>{
-            getStatus();
-        },5000
+};
+const handletyping = async () => {
+    let res = await axios.post("/chat.typing", props.chat);
+    console.log(res.data.message);
+};
 
-    );
+const handlekeyup = () => {
+    typing.value = false;
+};
 </script>
 
 <template>
@@ -79,6 +97,9 @@ onMounted(() => {
                 >
                     {{ user.name }}
                 </p>
+                <span class="text-green-500 animate-pulse" v-show="typing"
+                    >typing...</span
+                >
             </div>
         </div>
     </div>
@@ -113,6 +134,7 @@ onMounted(() => {
             <form class="space-x-2 flex" @submit.prevent="send_message">
                 <input
                     v-model="form.content"
+                    @keydown="handletyping"
                     id="content"
                     name="content"
                     type="text"

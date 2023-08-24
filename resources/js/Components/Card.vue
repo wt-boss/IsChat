@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import axios from "axios";
-import { watchEffect, ref } from "vue";
+import { watchEffect, ref, onMounted } from "vue";
 
 const props = defineProps({
     name: String,
@@ -35,15 +35,19 @@ const listen = ref(false);
             else{
                 online.value="bg-gray-400"
             }
+          
             
         }
     }
-    setInterval(
+    onMounted(()=>{
+        setInterval(
         ()=>{
             getStatus();
         },5000
 
     );
+});
+   
     
 </script>
 
